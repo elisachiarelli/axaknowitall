@@ -1,6 +1,7 @@
 var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
              + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
              + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
+var score=0;
 
 function loadData(){
     var valueRiskId = $(this).attr("value");
@@ -31,11 +32,13 @@ function generateForm(pos) {
 
     // create form
     var f = document.createElement("form");
-    f.setAttribute('method',"post");
-    f.setAttribute('action',"submit to the server");
+    //f.setAttribute('method',"post");
+    f.setAttribute('action',"javascript:evaluateCheckbox()");
 
     var answerDiv = document.createElement("div"); //input element, text
-    $(answerDiv).offset(pos);
+    answerDiv.style.position = "absolute";
+    answerDiv.style.left = (pos.left+20)+"px";
+    answerDiv.style.top = (pos.top)+"px";
     answerDiv.setAttribute("id","question");
     answerDiv.appendChild(f);
 
@@ -56,13 +59,14 @@ function generateForm(pos) {
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
         f.appendChild(answerContainer);
-        f.appendChild(document.createElement("br"));
+     //   f.appendChild(document.createElement("br"));
     }
 
     // submit
     var submit = document.createElement("input"); //input element, Submit button
     submit.setAttribute('type',"submit");
-    submit.setAttribute('value',"Submit");
+    submit.setAttribute('value',"submit");
+    //submit.on("click",evaluateCheckbox);
 
 
     f.appendChild(submit);
@@ -70,17 +74,20 @@ function generateForm(pos) {
 
 
     $("#question").draggable();
-    $("input:checkbox").click(evaluateCheckbox);
+    //$("input:checkbox").click(evaluateCheckbox);
 }
 
 function evaluateCheckbox(){
-    var isTrue = $(this).val() === "true";
-    var parent = $(this).parent();
-    if(isTrue){
-        parent.attr("style","background:green");
-    }
-    else{
-        parent.attr("style","background:red");
+    var chkArray = $("input:checkbox");
+    for(var i=0;i < chkArray.length; i++){
+        var isTrue = chkArray[i].value === "true" && chkArray[i].checked || (chkArray[i].value === "false" && !chkArray[i].checked);
+        var parent = $(chkArray[i]).parent();
+        if(isTrue){
+            parent.attr("style","background:green");
+        }
+        else{
+            parent.attr("style","background:red");
+        }
     }
 }
 

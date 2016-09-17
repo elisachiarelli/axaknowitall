@@ -14,7 +14,16 @@ aside{
     font-size:15px;
     font-family: "robotoslab";
 }
+#picture{
+	border:solid 3px #7f7f7f;
+}
 
+#question{
+	background-color: rgba(244, 245, 255, 0.8);
+	display: inline-block;
+    border: solid;
+    padding: 15px;
+}
 #sidebar{
     display: inline-block;
     float: left;
@@ -25,7 +34,7 @@ aside{
 section{
 	display: inline-block;
     padding:5px;
-    border:solid 3px #7f7f7f;
+    
     margin-top:5px;
 }
 
