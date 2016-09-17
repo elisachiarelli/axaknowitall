@@ -15,7 +15,10 @@ aside{
 }
 
 #question{
-	background-color: #fff;
+	background-color: rgba(244, 245, 255, 0.8);
+	display: inline-block;
+    border: solid;
+    padding: 15px;
 }
 #sidebar{
     display: inline-block;
