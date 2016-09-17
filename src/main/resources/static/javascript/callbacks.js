@@ -18,6 +18,13 @@ var score = scoreHolder(0);
 $(document).on("scoreChange", function (e, newScore) {
     score = score.add(newScore);
     $("#score").text(score.current());
+    if (clicked.allSolved()) {
+        $(document).trigger("gameFinished");
+    }
+});
+
+$(document).on("solved", function (e, percentage) {
+    progress.animate(percentage, {duration: 800});
 });
 
 $(document).on("gameFinished", function () {
@@ -30,9 +37,14 @@ $(document).on("gameFinished", function () {
 });
 
 var timerId;
+var progress;
 $(function () {
     $("area").click(loadData);
-
+    progress = new ProgressBar.Line('#progress', {
+        color: '#81D1FA',
+        trailColor: '#f4f4f4',
+        strokeWidth: 5
+    });
     timerId = countdown(
         new Date(),
         function (ts) {
@@ -44,16 +56,16 @@ $(function () {
 
 var clicked = (function () {
     var clicks = {"1": false, "2": false, "3": false};
+    var total = 0;
 
     function click(id) {
         clicks[id] = true;
-        if (allSolved()) {
-            $(document).trigger("gameFinished");
-        }
+        total++;
+        $(document).trigger("solved", total / 3);
     }
 
     function allSolved() {
-        return clicks["1"] && clicks["2"] && clicks[3];
+        return total == 3;
     }
 
     function check(id) {
@@ -62,7 +74,8 @@ var clicked = (function () {
 
     return {
         store: click,
-        already: check
+        already: check,
+        allSolved: allSolved
     }
 })();
 
@@ -138,17 +151,22 @@ function generateForm(pos, json, onSubmit) {
 function evaluateCheckbox() {
     var chkArray = $("input:checkbox");
     var score = 0;
+    var totalCorrect = 0;
     for (var i = 0; i < chkArray.length; i++) {
         var isTrue = chkArray[i].value === "true" && chkArray[i].checked || (chkArray[i].value === "false" && !chkArray[i].checked);
         var parent = $(chkArray[i]).parent();
         if (isTrue) {
             parent.attr("style", "background:green");
-            score += 1;
+            score += 5;
+            totalCorrect++;
         }
         else {
             parent.attr("style", "background:red");
-            score -= 3;
+            score -= 10;
         }
+    }
+    if (totalCorrect == 3) {
+        score += 20;
     }
     $(document).trigger("scoreChange", score);
     $("input:submit").attr('disabled', 'disabled');
