@@ -25,7 +25,7 @@ $(document).on("scoreChange", function (e, newScore) {
 });
 
 function showScore(result) {
-    $("#score").text = result;
+    $("#score").text(result);
 }
 
 function loadData(){
@@ -114,6 +114,7 @@ function evaluateCheckbox(){
         }
         else{
             parent.attr("style","background:red");
+            score -= 2;
         }
     }
     $( document ).trigger( "scoreChange",  score);
