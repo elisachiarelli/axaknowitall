@@ -1,26 +1,31 @@
-var data = '{'
-             + '"risk":[{"Answer":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
-             + '{"Answer":"Die Tür is tkapput", "isCorrect":"false"},'
-             + '{"Answer":"Das geht nicht mehr", "isCorrect":"false"}]'
-             + '}';
+var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
+             + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
+             + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
 
 function loadData(){
-/*
+    var valueRiskId = $(this).attr("value");
+    var pos = $(this).position();
  $.ajax({
-        url: "localhost:8080/questions/1",
-        success: function (data){
-            alert(data);
+        url: "/questions/" + valueRiskId,
+        data:data,
+        success: function (d){
+            data = d;
+            //alert(d);
         },
         error: function (){
             alert("ERROR");
         }
-    });*/
+    }).done(function() {
+        generateForm(pos);
+      });
 }
 
-function generateForm() {
-    loadData();
-    var json = JSON.parse(data);
-    var riskLength = json.risk.length;
+function generateForm(pos) {
+    //alert(pos);
+    //TESTDATA
+    //var json = JSON.parse(data);
+    var json = data;
+    var riskLength = json.length;
     $("#question").remove();
 
 
@@ -30,6 +35,7 @@ function generateForm() {
     f.setAttribute('action',"submit to the server");
 
     var answerDiv = document.createElement("div"); //input element, text
+    $(answerDiv).offset(pos);
     answerDiv.setAttribute("id","question");
     answerDiv.appendChild(f);
 
@@ -42,10 +48,10 @@ function generateForm() {
         cbox.setAttribute('type',"checkbox");
         cbox.setAttribute('name',"username");
         ///cbox.checked = json.risk[i].isCorrect === "true" ;
-        cbox.setAttribute('value', json.risk[i].isCorrect);
+        cbox.setAttribute('value', json[i].isCorrect);
 
         var text = document.createElement("span"); //input element, text
-        text.innerHTML = json.risk[i].Answer;
+        text.innerHTML = json[i].question;
 
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
@@ -79,7 +85,7 @@ function evaluateCheckbox(){
 }
 
 $(document).ready(function(){
-    $("area").click(generateForm);
+    $("area").click(loadData);
 });
 
 
