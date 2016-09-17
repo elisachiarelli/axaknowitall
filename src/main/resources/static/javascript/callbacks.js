@@ -2,6 +2,32 @@ var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
              + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
              + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
 
+var scoreHolder = function (initial) {
+    function increase(num) {
+        return scoreHolder(initial + num);
+    }
+
+    function currentScore() {
+        return initial;
+    }
+
+    return {
+        add: increase,
+        current: currentScore
+    }
+};
+
+var score = scoreHolder(0);
+
+$(document).on("scoreChange", function (e, newScore) {
+    score = score.add(newScore);
+    showScore(score.current());
+});
+
+function showScore(result) {
+    $("#score").text = result;
+}
+
 function loadData(){
     var valueRiskId = $(this).attr("value");
     var pos = $(this).position();
