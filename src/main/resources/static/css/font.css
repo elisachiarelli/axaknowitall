@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../font/roboto_regular_macroman/Roboto-Regular-webfont.eot');
+    src: url('../font/roboto_regular_macroman/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../font/roboto_regular_macroman/Roboto-Regular-webfont.woff') format('woff'), url('../font/roboto_regular_macroman/Roboto-Regular-webfont.ttf') format('truetype'), url('../font/roboto_regular_macroman/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../font/roboto_bold_macroman/Roboto-Bold-webfont.eot');
+    src: url('../font/roboto_bold_macroman/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../font/roboto_bold_macroman/Roboto-Bold-webfont.woff') format('woff'),
+    url('../font/roboto_bold_macroman/Roboto-Bold-webfont.ttf') format('truetype'),
+    url('../font/roboto_bold_macroman/Roboto-Bold-webfont.svg#robotobold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'robotoslab';
+    src: url('../font/robotoslab_regular_macroman/RobotoSlab-Regular-webfont.eot');
+    src: url('../font/robotoslab_regular_macroman/RobotoSlab-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../font/robotoslab_regular_macroman/RobotoSlab-Regular-webfont.woff') format('woff'), url('../font/robotoslab_regular_macroman/RobotoSlab-Regular-webfont.ttf') format('truetype'), url('../font/robotoslab_regular_macroman/RobotoSlab-Regular-webfont.svg#roboto_slabregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
