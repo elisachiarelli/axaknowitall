@@ -2,13 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="javascript/callbacks.js"></script>
     <title>Main page</title>
+     <link href="css/layout.css" rel="stylesheet" />
 </head>
 <body>
-<img src="images/testHouse.jpg" alt="" usemap="#Map"/>
-<map name="Map" id="Map">
-    <area alt="" title="" href="#" shape="poly" coords="82,124,123,123,123,193,82,189"/>
-    <area alt="" title="" href="#" shape="poly" coords="278,244,321,240,335,259,292,265"/>
-</map>
+
+<header>Knowing the Risks</header>
+<nav>
+	<ul>
+		<li>
+			Play
+		</li>
+		<li>
+			Information
+		<li>
+	</ul>
+</nav>
+<section>
+	<h1> Where are some Risks?</h1>
+	<div id="picture">
+		<img src="images/picture1.png" alt="" usemap="#Map"/>
+		<map name="Map" id="Map">
+			<area alt="" title="" href="#" shape="rect" coords="147,166,273,236" />
+    <area alt="" title="" href="#" shape="rect" coords="64,246,154,322" />
+    <area alt="" title="" href="#" shape="rect" coords="450,252,513,295" />		</map>
+	</div>
+</section>
+
+<aside id="sidebar">
+Your Score
+</aside>
+
+
+<footer> Footer</footer>
 </body>
 </html>
