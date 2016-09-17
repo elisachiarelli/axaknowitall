@@ -20,6 +20,14 @@ $(document).on("scoreChange", function (e, newScore) {
     $("#score").text(score.current());
 });
 
+$(document).on("gameFinished", function () {
+    picoModal(
+        "<div><h2>All risks identified!</h2></div>" +
+        "<div><h3>Please sign in to participate in a 1 month of free insurance draw!</h3></div>" +
+        "<div><input type='button' value='I want to live risk free for a month!'></div>"
+    ).show();
+});
+
 $(function () {
     $("area").click(loadData);
 });
@@ -29,6 +37,13 @@ var clicked = (function () {
 
     function click(id) {
         clicks[id] = true;
+        if (allSolved()) {
+            $(document).trigger("gameFinished");
+        }
+    }
+
+    function allSolved() {
+        return clicks["1"] && clicks["2"] && clicks[3];
     }
 
     function check(id) {
