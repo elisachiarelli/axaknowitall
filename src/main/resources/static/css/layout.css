@@ -10,7 +10,13 @@ aside{
     text-align:center;
     font-style:italic;
 }
+#picture{
+	border:solid 3px #7f7f7f;
+}
 
+#question{
+	background-color: #fff;
+}
 #sidebar{
     display: inline-block;
     float: left;
@@ -20,7 +26,7 @@ aside{
 section{
 	display: inline-block;
     padding:5px;
-    border:solid 3px #7f7f7f;
+    
     margin-top:5px;
 }
 
