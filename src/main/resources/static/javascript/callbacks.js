@@ -1,7 +1,3 @@
-var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
-    + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
-    + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
-
 var scoreHolder = function (initial) {
     function increase(num) {
         return scoreHolder(initial + num);
@@ -18,6 +14,15 @@ var scoreHolder = function (initial) {
 };
 
 var score = scoreHolder(0);
+
+$(document).on("scoreChange", function (e, newScore) {
+    score = score.add(newScore);
+    $("#score").text(score.current());
+});
+
+$(function () {
+    $("area").click(loadData);
+});
 
 var clicked = (function () {
     var clicks = {"1": false, "2": false, "3": false};
@@ -36,15 +41,6 @@ var clicked = (function () {
     }
 })();
 
-$(document).on("scoreChange", function (e, newScore) {
-    score = score.add(newScore);
-    showScore(score.current());
-});
-
-function showScore(result) {
-    $("#score").text(result);
-}
-
 function loadData() {
     var valueRiskId = $(this).attr("value");
     if (clicked.already(valueRiskId)) {
@@ -54,32 +50,28 @@ function loadData() {
     var pos = $(this).position();
     $.ajax({
         url: "/questions/" + valueRiskId,
-        data: data,
         success: function (d) {
-            data = d;
-            //alert(d);
+            generateForm(pos, d, function () {
+                clicked.store(valueRiskId);
+            });
         },
-        error: function () {
-            alert("ERROR");
+        error: function (e) {
+            alert("Oops! Something went wrong!");
+            console.log(e);
         }
-    }).done(function () {
-        generateForm(pos, function () {
-            clicked.store(valueRiskId);
-        });
     });
 }
 
-function generateForm(pos, onSubmit) {
-    //alert(pos);
-    //TESTDATA
-    //var json = JSON.parse(data);
-    var json = data;
-    var riskLength = json.length;
+function closeQuestion() {
     $("#question").remove();
+}
+
+function generateForm(pos, json, onSubmit) {
+    var riskLength = json.length;
+    closeQuestion();
 
     // create form
     var f = document.createElement("form");
-    //f.setAttribute('method',"post");
     f.setAttribute('action', "javascript:evaluateCheckbox()");
 
     var answerDiv = document.createElement("div"); //input element, text
@@ -92,19 +84,18 @@ function generateForm(pos, onSubmit) {
     for (var i = 0; i < riskLength; i++) {
         var answerContainer = document.createElement("div");
         // itterate json
-        var cbox = document.createElement("input"); //input element, text
+        var cbox = document.createElement("input");
         cbox.setAttribute('type', "checkbox");
         cbox.setAttribute('name', "username");
         ///cbox.checked = json.risk[i].isCorrect === "true" ;
         cbox.setAttribute('value', json[i].isCorrect);
 
-        var text = document.createElement("span"); //input element, text
+        var text = document.createElement("span");
         text.innerHTML = json[i].question;
 
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
         f.appendChild(answerContainer);
-        //   f.appendChild(document.createElement("br"));
     }
 
     // submit
@@ -117,7 +108,6 @@ function generateForm(pos, onSubmit) {
     document.getElementsByTagName('body')[0].appendChild(answerDiv);
 
     $("#question").draggable();
-    //$("input:checkbox").click(evaluateCheckbox);
 }
 
 function evaluateCheckbox() {
@@ -132,19 +122,14 @@ function evaluateCheckbox() {
         }
         else {
             parent.attr("style", "background:red");
-            score -= 2;
+            score -= 3;
         }
     }
     $(document).trigger("scoreChange", score);
-    score = 0;
     $("input:submit").attr('disabled', 'disabled');
     $("#question").fadeOut(2000, function () {
-        $(this).remove();
+        closeQuestion();
     });
 }
-
-$(document).ready(function () {
-    $("area").click(loadData);
-});
 
 
