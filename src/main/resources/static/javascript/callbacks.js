@@ -21,15 +21,25 @@ $(document).on("scoreChange", function (e, newScore) {
 });
 
 $(document).on("gameFinished", function () {
+    window.clearInterval(timerId);
     picoModal(
-        "<div><h2>All risks identified!</h2></div>" +
+        "<div><h2>All risks found! You scored " + score.current() + " points with elapsed time " + document.getElementById('timer').innerHTML + "</h2></div>" +
         "<div><h3>Please sign in to participate in a 1 month of free insurance draw!</h3></div>" +
         "<div><input type='button' value='I want to live risk free for a month!'></div>"
     ).show();
 });
 
+var timerId;
 $(function () {
     $("area").click(loadData);
+
+    timerId = countdown(
+        new Date(),
+        function (ts) {
+            document.getElementById('timer').innerHTML = ts.toHTML("strong");
+        },
+        countdown.MINUTES | countdown.SECONDS);
+
 });
 
 var clicked = (function () {
