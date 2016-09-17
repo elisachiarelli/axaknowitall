@@ -12,5 +12,9 @@ public class Risk {
     @OneToMany
     @JoinColumn(name = "risk_id")
     private List<Question> answers;
+
+    public List<Question> getAnswers() {
+        return answers;
+    }
 }
 

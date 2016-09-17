@@ -7,10 +7,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-class Question {
+public class Question {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private String question;
     private boolean correct;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
 }
