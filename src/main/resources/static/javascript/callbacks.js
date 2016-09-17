@@ -1,7 +1,6 @@
 var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
              + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
              + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
-var score=0;
 
 function loadData(){
     var valueRiskId = $(this).attr("value");
@@ -79,16 +78,22 @@ function generateForm(pos) {
 
 function evaluateCheckbox(){
     var chkArray = $("input:checkbox");
+    var score = 0;
     for(var i=0;i < chkArray.length; i++){
         var isTrue = chkArray[i].value === "true" && chkArray[i].checked || (chkArray[i].value === "false" && !chkArray[i].checked);
         var parent = $(chkArray[i]).parent();
         if(isTrue){
             parent.attr("style","background:green");
+            score += 1;
         }
         else{
             parent.attr("style","background:red");
         }
     }
+    $( document ).trigger( "scoreChange",  score);
+    score = 0;
+    $("input:submit").attr('disabled', 'disabled');
+    $("#question").fadeOut(2000, function(){ $(this).remove(); });
 }
 
 $(document).ready(function(){
