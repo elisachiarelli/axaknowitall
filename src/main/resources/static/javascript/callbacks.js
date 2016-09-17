@@ -1,22 +1,33 @@
-var data = '{'
-             + '"risk":[{"Answer":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
-             + '{"Answer":"Die Tür is tkapput", "isCorrect":"false"},'
-             + '{"Answer":"Das geht nicht mehr", "isCorrect":"false"}]'
-             + '}';
+var data = '[{"question":"Das Fenster ist zu weit offen", "isCorrect":"true"},'
+             + '{"question":"Die Tür is tkapput", "isCorrect":"false"},'
+             + '{"question":"Das geht nicht mehr", "isCorrect":"false"}]';
 
 function loadData(){
+    var valueRiskId = $(this).attr("value");
+    var pos = $(this).position();
  $.ajax({
-        url: "http://rest-service.guides.spring.io/greeting"
-    }).then(function(data) {
-       $('.greeting-id').append(data.id);
-       $('.greeting-content').append(data.content);
-    });
+        url: "/questions/" + valueRiskId,
+        data:data,
+        success: function (d){
+            data = d;
+            //alert(d);
+        },
+        error: function (){
+            alert("ERROR");
+        }
+    }).done(function() {
+        generateForm(pos);
+      });
 }
 
-function generateForm() {
-    var json = JSON.parse(data);
-    var riskLength = json.risk.length;
-    $("form").remove();
+function generateForm(pos) {
+    //alert(pos);
+    //TESTDATA
+    //var json = JSON.parse(data);
+    var json = data;
+    var riskLength = json.length;
+    $("#question").remove();
+
 
     // create form
     var f = document.createElement("form");
@@ -24,8 +35,11 @@ function generateForm() {
     f.setAttribute('action',"submit to the server");
 
     var answerDiv = document.createElement("div"); //input element, text
-    answerDiv.setAttribute("id","text");
-    f.appendChild(answerDiv)
+    $(answerDiv).offset(pos);
+    answerDiv.setAttribute("id","question");
+    answerDiv.appendChild(f);
+
+
 
     for (var i = 0; i < riskLength; i++){
         var answerContainer = document.createElement("div");
@@ -34,10 +48,10 @@ function generateForm() {
         cbox.setAttribute('type',"checkbox");
         cbox.setAttribute('name',"username");
         ///cbox.checked = json.risk[i].isCorrect === "true" ;
-        cbox.setAttribute('value', json.risk[i].isCorrect);
+        cbox.setAttribute('value', json[i].isCorrect);
 
         var text = document.createElement("span"); //input element, text
-        text.innerHTML = json.risk[i].Answer;
+        text.innerHTML = json[i].question;
 
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
@@ -52,9 +66,10 @@ function generateForm() {
 
 
     f.appendChild(submit);
-    document.getElementsByTagName('body')[0].appendChild(f);
+    document.getElementsByTagName('body')[0].appendChild(answerDiv);
 
-    $("form").draggable();
+
+    $("#question").draggable();
     $("input:checkbox").click(evaluateCheckbox);
 }
 
@@ -70,7 +85,7 @@ function evaluateCheckbox(){
 }
 
 $(document).ready(function(){
-    $("area").click(generateForm);
+    $("area").click(loadData);
 });
 
 

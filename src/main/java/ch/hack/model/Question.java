@@ -1,6 +1,8 @@
 package ch.hack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,7 @@ public class Question {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private String question;
+    @JsonProperty("isCorrect")
     private boolean correct;
 
     public int getId() {
