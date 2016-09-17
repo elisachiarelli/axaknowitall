@@ -5,18 +5,24 @@ var data = '{'
              + '}';
 
 function loadData(){
+/*
  $.ajax({
-        url: "http://rest-service.guides.spring.io/greeting"
-    }).then(function(data) {
-       $('.greeting-id').append(data.id);
-       $('.greeting-content').append(data.content);
-    });
+        url: "localhost:8080/questions/1",
+        success: function (data){
+            alert(data);
+        },
+        error: function (){
+            alert("ERROR");
+        }
+    });*/
 }
 
 function generateForm() {
+    loadData();
     var json = JSON.parse(data);
     var riskLength = json.risk.length;
-    $("form").remove();
+    $("#question").remove();
+
 
     // create form
     var f = document.createElement("form");
@@ -24,8 +30,10 @@ function generateForm() {
     f.setAttribute('action',"submit to the server");
 
     var answerDiv = document.createElement("div"); //input element, text
-    answerDiv.setAttribute("id","text");
-    f.appendChild(answerDiv)
+    answerDiv.setAttribute("id","question");
+    answerDiv.appendChild(f);
+
+
 
     for (var i = 0; i < riskLength; i++){
         var answerContainer = document.createElement("div");
@@ -52,9 +60,10 @@ function generateForm() {
 
 
     f.appendChild(submit);
-    document.getElementsByTagName('body')[0].appendChild(f);
+    document.getElementsByTagName('body')[0].appendChild(answerDiv);
 
-    $("form").draggable();
+
+    $("#question").draggable();
     $("input:checkbox").click(evaluateCheckbox);
 }
 
