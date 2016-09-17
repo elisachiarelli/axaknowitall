@@ -35,7 +35,9 @@ function generateForm(pos) {
     f.setAttribute('action',"submit to the server");
 
     var answerDiv = document.createElement("div"); //input element, text
-    $(answerDiv).offset(pos);
+    answerDiv.style.position = "absolute";
+    answerDiv.style.left = (pos.left+20)+"px";
+    answerDiv.style.top = (pos.top)+"px";
     answerDiv.setAttribute("id","question");
     answerDiv.appendChild(f);
 
@@ -56,7 +58,7 @@ function generateForm(pos) {
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
         f.appendChild(answerContainer);
-        f.appendChild(document.createElement("br"));
+     //   f.appendChild(document.createElement("br"));
     }
 
     // submit
