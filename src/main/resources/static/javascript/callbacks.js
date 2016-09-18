@@ -25,6 +25,7 @@ $(document).on("scoreChange", function (e, newScore) {
 
 $(document).on("solved", function (e, percentage) {
     progress.animate(percentage, {duration: 800});
+    progress.setText((percentage * 100).toFixed(0) + '%');
 });
 
 $(document).on("gameFinished", function () {
@@ -175,7 +176,7 @@ function evaluateCheckbox() {
     }
     $(document).trigger("scoreChange", score);
     $("input:submit").attr('disabled', 'disabled');
-    $("#question").fadeOut(2000, function () {
+    $("#question").fadeOut(1500, function () {
         closeQuestion();
     });
 }
