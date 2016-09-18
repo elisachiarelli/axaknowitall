@@ -1,7 +1,7 @@
 header{
     padding:0px;
     text-align:left;
-    font-family: "robotoslab";
+    font-family: "robotoslab", Serif, Arial;
     font-size:28px;
 }
 
@@ -12,8 +12,16 @@ aside{
     text-align:center;
     <!--font-style:italic; -->
     font-size:15px;
-    font-family: "robotoslab";
+    font-family: "robotoslab", Serif, Arial;
 }
+
+#progress{
+	border: 1px solid #b6b6b6;
+	margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 1px;
+}
+
 #picture{
 	border:solid 3px #7f7f7f;
 }
@@ -53,6 +61,9 @@ footer{
 
 nav{
     text-align:center;
+    background: rgba(244, 245, 255, 0.5);
+    border-bottom: solid 0.5px rgba(244, 245, 255, 0.8);
+    border-top: solid 0.5px rgba(244, 245, 255, 0.8);
 }
 
 ul li{
@@ -62,12 +73,24 @@ ul li{
     text-align:left;
     font-size:20px;
     font-weight:bold;
-    font-family: "robotoslab";
+    font-family: "robotoslab", Arial;
+}
+
+a{
+	color: #767576;
+	text-decoration: none;
+}
+#active a{
+	color: #000;
+}
+
+a:hover{
+	color: #000;
 }
 
 h1 {
     font-size: 35px;
-    font-family: "robotoslab";
+    font-family: "robotoslab", Arial;
     color: #303030;
     letter-spacing: 1px;
     font-weight: bold;
