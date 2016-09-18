@@ -13,9 +13,15 @@ import java.util.Collections;
 @RestController
 public class RiskController {
 
+	
     @RequestMapping(value = "/questions/{risk}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Collection<Question> getQuestionAnswers(@PathVariable Risk risk) {
         return risk == null ? Collections.emptyList() : risk.getAnswers();
+    }
+    
+    @RequestMapping(value = "/question/{risk}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Risk getRisk(@PathVariable Risk risk) {
+        return risk == null ? null : risk;
     }
 
 }

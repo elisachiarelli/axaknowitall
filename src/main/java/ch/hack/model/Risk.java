@@ -9,6 +9,7 @@ public class Risk {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private String description;
+    
     @OneToMany
     @JoinColumn(name = "risk_id")
     private List<Question> answers;
@@ -16,5 +17,13 @@ public class Risk {
     public List<Question> getAnswers() {
         return answers;
     }
+    
+    public int getId() {
+        return id;
+    }
+
+	public String getDescription() {
+		return description;
+	}
 }
 

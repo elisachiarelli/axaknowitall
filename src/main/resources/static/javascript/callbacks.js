@@ -87,7 +87,7 @@ function loadData() {
     }
     var pos = $(this).position();
     $.ajax({
-        url: "/questions/" + valueRiskId,
+        url: "/question/" + valueRiskId,
         success: function (d) {
             generateForm(pos, d, function () {
                 clicked.store(valueRiskId);
@@ -105,13 +105,13 @@ function closeQuestion() {
 }
 
 function generateForm(pos, json, onSubmit) {
-    var riskLength = json.length;
+    var riskLength = json.answers.length;
     closeQuestion();
 
     // create form
     var f = document.createElement("form");
     f.setAttribute('action', "javascript:evaluateCheckbox()");
-
+    
     var answerDiv = document.createElement("div"); //input element, text
     answerDiv.style.position = "absolute";
     answerDiv.style.left = (pos.left + 20) + "px";
@@ -119,6 +119,11 @@ function generateForm(pos, json, onSubmit) {
     answerDiv.setAttribute("id", "question");
     answerDiv.appendChild(f);
 
+    var questionText = document.createElement("p");
+    questionText.setAttribute('id', "questionHeadline");
+    questionText.innerHTML = json.description;
+    f.appendChild(questionText);
+    
     for (var i = 0; i < riskLength; i++) {
         var answerContainer = document.createElement("div");
         // itterate json
@@ -126,10 +131,10 @@ function generateForm(pos, json, onSubmit) {
         cbox.setAttribute('type', "checkbox");
         cbox.setAttribute('name', "username");
         ///cbox.checked = json.risk[i].isCorrect === "true" ;
-        cbox.setAttribute('value', json[i].isCorrect);
+        cbox.setAttribute('value', json.answers[i].isCorrect);
 
         var text = document.createElement("span");
-        text.innerHTML = json[i].question;
+        text.innerHTML = json.answers[i].question;
 
         answerContainer.appendChild(cbox);
         answerContainer.appendChild(text);
